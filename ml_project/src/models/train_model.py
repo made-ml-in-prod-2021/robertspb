@@ -5,6 +5,7 @@ import typing
 
 import yaml
 from sklearn.metrics import classification_report
+from typing import Any
 
 from src.utils import get_absolute_path
 from src.data import read_data
@@ -13,26 +14,28 @@ from src.data import split_data_train_val
 from src.features import get_x_y
 from src.features import CustomTransformer
 from predict_model import predict
-
+from src.config import (SaveModelConfig,
+                        SaveReportConfig,
+                        Config)
 
 # logger = logging.getLogger()
 
 
-def save_model(model: dict, cfg) -> None:
-    out_path = cfg.main.out_model.model_out_path + cfg.main.out_model.model_filename
+def save_model(model: Any, cfg: SaveModelConfig) -> None:
+    out_path = cfg.model_out_path + cfg.model_filename
     out_path = get_absolute_path(out_path)
     with open(out_path, 'wb') as f:
         pickle.dump(model, f)
 
 
-def save_report(metrics, cfg) -> None:
-    out_path = cfg.main.reports.report_out_path + cfg.main.reports.report_filename
+def save_report(metrics: dict, cfg: SaveReportConfig) -> None:
+    out_path = cfg.report_out_path + cfg.report_filename
     out_path = get_absolute_path(out_path)
     with open(out_path, 'w') as f:
         f.write(yaml.dump(metrics))
 
 
-def start_pipeline(cfg):
+def start_pipeline(cfg: Config):
     # logger.info()
     data_path = get_absolute_path(cfg.main.data_path)
     data = read_data(data_path)
@@ -48,8 +51,8 @@ def start_pipeline(cfg):
     model.fit(train_x, train_y)
     predictions = predict(model, val_x)
     metrics = classification_report(val_y, predictions, output_dict=True)
-    save_report(metrics, cfg)
-    save_model(model, cfg)
+    save_report(metrics, cfg.main.reports)
+    save_model(model, cfg.main.out_model)
 
 
 @hydra.main(config_name="config", config_path="../../configs")
