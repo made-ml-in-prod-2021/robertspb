@@ -1,0 +1,21 @@
+'0':
+  f1-score: 0.7567567567567568
+  precision: 0.9032258064516129
+  recall: 0.6511627906976745
+  support: 43
+'1':
+  f1-score: 0.8333333333333334
+  precision: 0.75
+  recall: 0.9375
+  support: 48
+accuracy: 0.8021978021978022
+macro avg:
+  f1-score: 0.795045045045045
+  precision: 0.8266129032258065
+  recall: 0.7943313953488372
+  support: 91
+weighted avg:
+  f1-score: 0.7971487971487973
+  precision: 0.8224034030485644
+  recall: 0.8021978021978022
+  support: 91
