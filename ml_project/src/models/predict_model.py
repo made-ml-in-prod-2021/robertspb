@@ -5,23 +5,24 @@ import pickle
 
 from src.data import read_data
 from src.data import edit_data
-from src.utils import get_absolute_path
 
-logger = logging.getLogger()
+
+logger = logging.getLogger('ml')
 
 
 def predict(model: dict, data: pd.DataFrame) -> pd.Series:
-    # logger.info()
+    logger.info(f'Start predicting')
+    logger.debug(f'Data shape for predicting: {data.shape}')
     predicted_data = model.predict(data)
-    # logger.info()
+    logger.info('Finished predicting - success')
     return predicted_data
 
 
 def load_model(path: str) -> dict:
-    # logger.info()
+    logger.info(f'Loading model from path: {path}')
     with open(path, 'rb') as f:
         model = pickle.load(f)
-    # logger.info()
+    logger.info('Model loaded')
     return model
 
 
