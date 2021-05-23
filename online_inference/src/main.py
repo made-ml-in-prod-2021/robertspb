@@ -20,17 +20,8 @@ def get_predictions(data: List[RequestDataModel],
     data = [record.__dict__ for record in data]
     df = pd.DataFrame(data)
     ids = df['id']
-    features = edit_data(df.drop('id', axis=1))
+    features = df.drop('id', axis=1)
     train_x = transformer.transform(features)
     predictions = classifier.predict(train_x)
     return [ResponseDataModel(id=idx, target=prediction)
             for idx, prediction in zip(ids, predictions)]
-
-
-def edit_data(data: pd.DataFrame, target: str = 'target') -> pd.DataFrame:
-    categorical_values = []
-    for column in data.columns:
-        if len(data[column].unique()) <= 10 and column != target:
-            categorical_values.append(column)
-    dataset = pd.get_dummies(data, columns=categorical_values)
-    return dataset
