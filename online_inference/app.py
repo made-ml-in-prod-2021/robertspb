@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from typing import List
 
-from src.main import load_model_from_path, get_predictions
+from src.main import load_model_from_path, get_predictions, validate_data
 from src.datamodel import RequestDataModel, ResponseDataModel
 
 
@@ -69,6 +69,12 @@ def predict(request: List[RequestDataModel]):
     if not health():
         logger.error('Model or transformer is not loaded')
         raise HTTPException(status_code=500, detail='Model or transformer is not loaded.')
+
+    for record in request:
+        valid, ans = validate_data(record)
+        if not valid:
+            raise HTTPException(status_code=400, detail=f'Wrong data input: {ans}')
+
     return get_predictions(request, classifier, transformer)
 
 

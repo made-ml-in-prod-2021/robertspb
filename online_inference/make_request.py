@@ -12,5 +12,5 @@ if __name__ == "__main__":
     request_data = data.to_json(orient='records')
     print(f'Sample: \n{request_data}')
     response = requests.post(REQUEST_URL, data=request_data)
-    print(f'Request status code {response.status_code}')
-    print(f'First 10 request items: \n{response.json()}')
+    print(f'Response status code {response.status_code}')
+    print(f'Predictions: \n{response.json()}')
