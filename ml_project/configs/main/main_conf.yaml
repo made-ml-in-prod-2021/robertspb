@@ -1,0 +1,9 @@
+# @package _group_
+data_path: 'data/raw/heart.csv'
+target_name: 'target'
+out_model:
+  model_out_path: 'models/'
+  model_filename: 'model.pkl'
+reports:
+  report_out_path: 'models/'
+  report_filename: 'metrics.yaml'

@@ -1,0 +1,4 @@
+defaults:
+  - main: main_conf
+  - split: split_data
+  - model: logistic_regression
