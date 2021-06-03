@@ -5,8 +5,8 @@ python 3.8
 Pull and run docker
 ------------
 `
-docker pull
-docker run -p 8000:8000 -it
+docker pull robspb/online_inference:v1
+docker run -p 8000:8000 -it robspb/online_inference:v1
 `
 
 Service API
