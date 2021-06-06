@@ -36,11 +36,10 @@ def get_sample_dataset(size: int,
 @click.option('--random_seed', default=42)
 def load_data(output_dir: str, size: int, random_seed: int) -> None:
     data, target = get_sample_dataset(size=size, random_seed=random_seed)
-    print(data.head())
+
     os.makedirs(output_dir, exist_ok=True)
-    print(output_dir)
-    data.to_csv(os.path.join(output_dir, 'data.csv'))
-    target.to_csv(os.path.join(output_dir, 'target.csv'))
+    data.to_csv(os.path.join(output_dir, 'data.csv'), index=False)
+    target.to_csv(os.path.join(output_dir, 'target.csv'), index=False)
 
 
 if __name__ == '__main__':

@@ -113,5 +113,25 @@ services:
       context: images/airflow-download
     image: airflow-download
 
+  load:
+    build:
+      context: images/airflow-load
+    image: airflow-load
+
+  split:
+    build:
+      context: images/airflow-split
+    image: airflow-split
+
+  train:
+    build:
+      context: images/airflow-train
+    image: airflow-train
+
+  validate:
+    build:
+      context: images/airflow-validate
+    image: airflow-validate
+
 volumes:
   postgres-db-volume:

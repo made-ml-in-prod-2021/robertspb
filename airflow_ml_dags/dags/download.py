@@ -1,8 +1,8 @@
 import airflow.utils.dates
 
-from datetime import timedelta
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
+from datetime import timedelta
 
 
 default_args = {
