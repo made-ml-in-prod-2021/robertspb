@@ -22,7 +22,7 @@ with DAG(
 
     load = DockerOperator(
         image='airflow-load',
-        command='--data_path /data/raw/{{ ds }} --save_to /data/processed/{{ ds }}',
+        command='--data_path /data/raw/{{ ds }} --save_to /data/processed/{{ ds }} --model_path /data/models/{{ ds }}',
         network_mode='bridge',
         task_id='docker-airflow-load',
         do_xcom_push=False,

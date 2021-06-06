@@ -133,5 +133,10 @@ services:
       context: images/airflow-validate
     image: airflow-validate
 
+  predict:
+    build:
+      context: images/airflow-predict
+    image: airflow-predict
+
 volumes:
   postgres-db-volume:
