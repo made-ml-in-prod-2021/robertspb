@@ -19,6 +19,7 @@ def save_data(save_to: str,
               model_path: str,
               transformer: StandardScaler) -> None:
     os.makedirs(save_to, exist_ok=True)
+    os.makedirs(model_path, exist_ok=True)
     data.to_csv(os.path.join(save_to, 'data.csv'), index=False)
     target.to_csv(os.path.join(save_to, 'target.csv'), index=False)
     with open(os.path.join(model_path, 'transformer.pkl'), 'wb') as f:

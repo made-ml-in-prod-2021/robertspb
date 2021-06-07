@@ -1,7 +1,9 @@
 import airflow.utils.dates
 
 from airflow import DAG
+from airflow.operators.dummy import DummyOperator
 from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.sensors.filesystem import FileSensor
 from datetime import timedelta
 
 
@@ -10,6 +12,8 @@ default_args = {
     'email': ['airflow@example.com'],
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
+    'email_on_failure': True,
+    'email_on_retry': False,
 }
 
 
@@ -19,6 +23,22 @@ with DAG(
     start_date=airflow.utils.dates.days_ago(1),
     schedule_interval='@weekly',
 ) as dag:
+
+    start = DummyOperator(task_id='start')
+
+    data_sensor = FileSensor(
+        task_id='data-sensor',
+        filepath='data/raw/{{ ds }}/data.csv',
+        poke_interval=10,
+        retries=100,
+    )
+
+    target_sensor = FileSensor(
+        task_id='target-sensor',
+        filepath='data/raw/{{ ds }}/target.csv',
+        poke_interval=10,
+        retries=100,
+    )
 
     load = DockerOperator(
         image='airflow-load',
@@ -60,4 +80,4 @@ with DAG(
         volumes=['/c/users/роберт/pycharmprojects/ml-in-prod-hw-1/airflow_ml_dags/data:/data'],
     )
 
-    load >> split >> train >> validate
+    start >> [data_sensor, target_sensor] >> load >> split >> train >> validate
