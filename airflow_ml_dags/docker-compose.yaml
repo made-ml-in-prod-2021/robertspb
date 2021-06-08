@@ -12,6 +12,13 @@ x-airflow-common:
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW__SMTP__SMTP_HOST: smtp.yandex.ru
+    AIRFLOW__SMTP__SMTP_PORT: 465
+    AIRFLOW__SMTP__SMTP_STARTTLS: 'false'
+    AIRFLOW__SMTP__SMTP_SSL: 'true'
+    AIRFLOW__SMTP__SMTP_USER: ${YA_USERNAME}
+    AIRFLOW__SMTP__SMTP_PASSWORD: ${YA_PASSWORD}
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: ${SEND_MAIL_FROM}
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs

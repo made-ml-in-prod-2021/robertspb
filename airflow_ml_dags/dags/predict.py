@@ -1,4 +1,5 @@
 import airflow.utils.dates
+import os
 
 from airflow import DAG
 from airflow.models import Variable
@@ -11,10 +12,11 @@ from datetime import timedelta
 DATA_PATH = '/data/raw/{{ ds }}'
 MODEL_PATH = Variable.get('prod_model_path')
 SAVE_TO_PATH = '/data/predictions/{{ ds }}'
+MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
 
 default_args = {
     'owner': 'airflow',
-    'email': ['airflow@example.com'],
+    'email': [MAIL],
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'email_on_failure': True,

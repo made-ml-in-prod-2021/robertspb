@@ -1,16 +1,20 @@
 import airflow.utils.dates
+import os
 
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from datetime import timedelta
 
 
+MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
+
 default_args = {
     'owner': 'airflow',
-    'email': ['airflow@example.com'],
+    'email': [MAIL],
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'email_on_failure': True,
+    'email_on_retry': False,
 }
 
 with DAG(

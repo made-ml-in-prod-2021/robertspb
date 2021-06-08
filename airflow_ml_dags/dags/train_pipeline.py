@@ -1,3 +1,5 @@
+import os
+
 import airflow.utils.dates
 
 from airflow import DAG
@@ -7,9 +9,11 @@ from airflow.sensors.filesystem import FileSensor
 from datetime import timedelta
 
 
+MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
+
 default_args = {
     'owner': 'airflow',
-    'email': ['airflow@example.com'],
+    'email': [MAIL],
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'email_on_failure': True,
