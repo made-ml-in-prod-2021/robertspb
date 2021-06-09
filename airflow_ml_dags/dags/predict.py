@@ -12,7 +12,11 @@ from datetime import timedelta
 DATA_PATH = '/data/raw/{{ ds }}'
 MODEL_PATH = Variable.get('prod_model_path')
 SAVE_TO_PATH = '/data/predictions/{{ ds }}'
-MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
+MAIL_FROM = 'AIRFLOW__SMTP__SMTP_MAIL_FROM'
+if MAIL_FROM in dict(os.environ):
+    MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
+else:
+    MAIL = 'example@example.com'
 
 default_args = {
     'owner': 'airflow',

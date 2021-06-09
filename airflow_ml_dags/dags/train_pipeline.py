@@ -9,7 +9,11 @@ from airflow.sensors.filesystem import FileSensor
 from datetime import timedelta
 
 
-MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
+MAIL_FROM = 'AIRFLOW__SMTP__SMTP_MAIL_FROM'
+if MAIL_FROM in dict(os.environ):
+    MAIL = os.environ['AIRFLOW__SMTP__SMTP_MAIL_FROM']
+else:
+    MAIL = 'example@example.com'
 
 default_args = {
     'owner': 'airflow',

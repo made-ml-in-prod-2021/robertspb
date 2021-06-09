@@ -38,3 +38,5 @@ To shut-down Airflow use:
 
 Tests
 ------------
+To run tests use CLI command:
+`python -m pytest test`
